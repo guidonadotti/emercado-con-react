@@ -3,11 +3,15 @@ import { Button, ButtonGroup, Col, Form, Row } from "react-bootstrap";
 import Estrellas from "./Estrellas";
 import { EstrellasContext } from "../../contexts/EstrellasContext";
 import { useParams } from "react-router-dom";
+import { ProductContext } from "../../contexts/ProductContext";
 
-function IngresarComentario({ productName = "producto" }) {
+function IngresarComentario() {
   const { id } = useParams();
   const [text, setText] = useState("");
   const { chequeado, setChequeado } = useContext(EstrellasContext);
+  const {
+    producto: { name = "producto" },
+  } = useContext(ProductContext);
 
   const handleInputChange = (event) => {
     setText(event.target.value);
@@ -16,7 +20,7 @@ function IngresarComentario({ productName = "producto" }) {
   };
   function handleSubmit(e) {
     e.preventDefault();
-    const datos = Object.fromEntries(new FormData(e.target));
+    const datos = { ...Object.fromEntries(new FormData(e.target)) };
     console.log(datos);
 
     const datosComentario = {
@@ -34,7 +38,7 @@ function IngresarComentario({ productName = "producto" }) {
           <Form.Group className="mb-3">
             <Form.Control
               as="textarea"
-              placeholder={`El ${productName} me pareció...`}
+              placeholder={`El ${name} me pareció...`}
               required
               rows={2}
               value={text}

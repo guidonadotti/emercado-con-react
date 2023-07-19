@@ -40,7 +40,6 @@ function ProductInfo() {
     cost,
     soldCount,
     description,
-    images,
     relatedProducts = [],
   } = producto;
 
@@ -52,7 +51,7 @@ function ProductInfo() {
       <hr />
       <Row className="gy-3 mb-2">
         <Col lg="4" as="section">
-          <ImagenesIlustrativas imagenes={images} name={name} />
+          <ImagenesIlustrativas />
         </Col>
         <Col as="section">
           <h2>
@@ -71,7 +70,7 @@ function ProductInfo() {
           <ComentariosIcon /> Opiniones
         </h2>
         <EstrellasProvider>
-          <IngresarComentario productName={name} />
+          <IngresarComentario />
         </EstrellasProvider>
       </Row>
 

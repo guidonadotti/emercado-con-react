@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Carousel } from "react-bootstrap";
+import { ProductContext } from "../../contexts/ProductContext";
 
-function ImagenesIlustrativas({ imagenes = [], name }) {
+function ImagenesIlustrativas() {
+  const {
+    producto: { images = [], name },
+  } = useContext(ProductContext);
   return (
     <Carousel as="section">
-      {imagenes.map((imgSrc) => (
+      {images.map((imgSrc) => (
         <Carousel.Item key={imgSrc}>
           <img
             className="d-block w-100"
