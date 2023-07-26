@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { ProductContext } from "../../contexts/ProductContext";
 import { LoginContext } from "../../contexts/LoginContext";
 import gender from "gender-es";
+import mayusculas from "../../utils/mayusculas";
 
 function formatDateToYYYYMMDDHHMMSS(date) {
   const year = date.getFullYear();
@@ -53,7 +54,7 @@ function IngresarComentario() {
     setText("");
     setChequeado("");
   }
-  const articulo = gender.definiteArticle(name.split(" ")[0]);
+  const el_la = mayusculas(gender.definiteArticle(name.split(" ")[0]));
 
   return (
     <Form noValidate onSubmit={handleSubmit}>
@@ -62,7 +63,7 @@ function IngresarComentario() {
           <Form.Group className="mb-3">
             <Form.Control
               as="textarea"
-              placeholder={`${articulo} ${name} me pareció...`}
+              placeholder={`${el_la} ${name} me pareció...`}
               required
               rows={2}
               value={text}

@@ -9,7 +9,7 @@ const Login = () => {
         <div className="container text-center">
           <div className="row justify-content-center">
             <div className="col-md-4">
-              <img src={JAPlogo} alt="Banner Jovenes a Programar" srcSet="" />
+              <img src={JAPlogo} alt="Banner Jóvenes a Programar" srcSet="" />
             </div>
           </div>
           <LoginForm />

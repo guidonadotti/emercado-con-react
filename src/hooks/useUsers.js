@@ -12,6 +12,7 @@ export default function useUsers() {
       return {
         ...prevState,
         [email]: {
+          username: email.split("@")[0],
           carrito: [],
         },
       };
@@ -42,6 +43,16 @@ export default function useUsers() {
     if (!email) return false;
     return users[email]["carrito"].findIndex((p) => p.id == id) != -1;
   }
-
-  return { users, guardarDatos, agregarCarrito, quitarCarrito, estaEnCarrito };
+  function getActiveUsername({ email }) {
+    if (!email) return;
+    return users[email]["username"];
+  }
+  return {
+    users,
+    guardarDatos,
+    agregarCarrito,
+    quitarCarrito,
+    estaEnCarrito,
+    getActiveUsername,
+  };
 }

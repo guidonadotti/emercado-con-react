@@ -1,8 +1,9 @@
 import React from "react";
 import MainCabecera from "../General/MainCabecera";
+import mayusculas from "../../utils/mayusculas";
 
 function ProductsMainCabecera({ categoria = "" }) {
-  categoria = categoria.replace(/\b\w/g, (l) => l.toUpperCase());
+  categoria = mayusculas(categoria);
 
   return (
     <MainCabecera titulo={categoria}>

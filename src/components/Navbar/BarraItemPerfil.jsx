@@ -7,9 +7,8 @@ import { LoginContext } from "../../contexts/LoginContext";
 const BarraItemPerfil = ({ children }) => {
   const { cerrarSesion } = useContext(LoginContext);
 
-  if (children === "Iniciar sesión") {
+  if (children === "Iniciar sesión")
     return <BarraItem link="/login">{children}</BarraItem>;
-  }
 
   return (
     <NavDropdown title={children} id="basic-nav-dropdown">
