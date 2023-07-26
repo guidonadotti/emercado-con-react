@@ -11,30 +11,30 @@ import {
 export const ProductContext = createContext();
 
 const useAPIwithCompleteURL = ({ urlParams, initialState }) => {
-  const { completeURL = "" } = useCompleteURL({
+  const [completeURL = ""] = useCompleteURL({
     params: urlParams,
   });
 
-  const { data = initialState } = useAPI({
+  const [data = initialState, setData] = useAPI({
     apiURL: completeURL,
     initialState: initialState,
   });
-  return { data };
+  return [data, setData];
 };
 
 export function ProductProvider({ children }) {
   const { id } = useParams();
 
-  const { data: producto = {} } = useAPIwithCompleteURL({
+  const [producto] = useAPIwithCompleteURL({
     urlParams: [PRODUCT_INFO_URL, id, EXT_TYPE],
     initialState: {},
   });
-  const { data: comentarios = [] } = useAPIwithCompleteURL({
+  const [comentarios, setComentarios] = useAPIwithCompleteURL({
     urlParams: [PRODUCT_INFO_COMMENTS_URL, id, EXT_TYPE],
     initialState: [],
   });
   return (
-    <ProductContext.Provider value={{ comentarios, producto }}>
+    <ProductContext.Provider value={{ comentarios, producto, setComentarios }}>
       {children}
     </ProductContext.Provider>
   );

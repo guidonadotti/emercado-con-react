@@ -18,5 +18,5 @@ export default function useCompleteURL({ params }) {
     setCompleteURL(url);
   }, [...params]);
 
-  return { completeURL };
+  return [completeURL];
 }

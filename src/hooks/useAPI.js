@@ -21,7 +21,7 @@ function useAPI({ apiURL = "", initialState }) {
         .catch((e) => console.error(e));
   }, [apiURL]);
 
-  return { data };
+  return [data, setData];
 }
 
 export default useAPI;

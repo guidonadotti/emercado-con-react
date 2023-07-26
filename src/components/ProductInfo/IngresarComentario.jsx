@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, ButtonGroup, Col, Form, Row } from "react-bootstrap";
 import Estrellas from "./Estrellas";
 import { EstrellasContext } from "../../contexts/EstrellasContext";
@@ -25,9 +25,11 @@ function IngresarComentario() {
   const { chequeado, setChequeado } = useContext(EstrellasContext);
   const {
     producto: { name = "producto" },
+    setComentarios,
+    comentarios,
   } = useContext(ProductContext);
   const { user, getActiveUsername } = useContext(LoginContext);
-
+  useEffect(() => console.log(comentarios), [comentarios]);
   const handleInputChange = (event) => {
     setText(event.target.value);
     event.target.style.height = "auto";
@@ -37,18 +39,19 @@ function IngresarComentario() {
   function handleSubmit(e) {
     e.preventDefault();
     if (!user) {
-      console.log("Tenés que estar logueado, pelotudo");
+      alert("Tiene que estar logueado para comentar");
       return;
     }
 
     const datosComentario = {
-      product: id,
-      score: chequeado,
+      product: parseInt(id),
+      score: parseInt(chequeado),
       description: text.trim(),
-      dateTime: formatDateToYYYYMMDDHHMMSS(new Date()),
       user: getActiveUsername({ email: user }),
+      dateTime: formatDateToYYYYMMDDHHMMSS(new Date()),
     };
 
+    setComentarios((prevState) => [...prevState, datosComentario]);
     console.log(datosComentario);
 
     setText("");

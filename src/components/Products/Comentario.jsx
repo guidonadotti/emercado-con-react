@@ -14,11 +14,14 @@ function Comentario({ dateTime, description, score, user, ...props }) {
       <p className="my-2">{description}</p>
       <span>
         {[...Array(score)].map((_, index) => (
-          <StarFill style={{ color: "gold" }} key={`estrella_llena_${index}`} />
+          <StarFill
+            style={{ color: "gold" }}
+            key={`${user}_${dateTime}_estrella_llena_${index}`}
+          />
         ))}
 
         {[...Array(5 - score)].map((_, index) => (
-          <Star key={`estrella_vacia_${index}`} />
+          <Star key={`${user}_${dateTime}_estrella_vacia_${index}`} />
         ))}
       </span>
     </Row>
