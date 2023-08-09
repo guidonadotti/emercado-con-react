@@ -8,7 +8,7 @@ import Container from "react-bootstrap/Container";
 
 const Footer = () => {
   return (
-    <Container as="footer" className="text-muted">
+    <Container as="footer" className="footer text-muted">
       <a href="#top" className="float-end">
         <Button variant="ligth" size="lg" title="Volver arriba">
           <Up />

@@ -10,18 +10,26 @@ import { useEffect, useState } from "react";
  */
 function useAPI({ apiURL = "", initialState }) {
   const [data, setData] = useState(initialState);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     apiURL &&
       fetch(apiURL)
-        .then((response) => response.json())
+        .then((response) => {
+          if (!response.ok) throw new Error(response.statusText);
+          return response.json();
+        })
         .then((APIdata) => {
           setData(APIdata);
         })
-        .catch((e) => console.error(e));
+        .catch((e) => console.error(e))
+        .finally(() => {
+          setIsLoading(false);
+        });
   }, [apiURL]);
 
-  return [data, setData];
+  return [data, isLoading];
 }
 
 export default useAPI;

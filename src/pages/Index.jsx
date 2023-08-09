@@ -6,8 +6,10 @@ import Col from "react-bootstrap/Col";
 
 import "../css/jumbotron.css";
 import CardIndex from "../components/General/Cards";
+import useWindowTitle from "../hooks/useWindowTitle";
 
 const Index = () => {
+  useWindowTitle({ windowTitle: "emercado" });
   return (
     <>
       <div className="jumbotron text-center"></div>

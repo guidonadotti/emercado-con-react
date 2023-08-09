@@ -24,6 +24,7 @@ export default function useUsers() {
       return {
         ...prevState,
         [email]: {
+          ...prevState[email],
           carrito: [...prevState[email]["carrito"], producto],
         },
       };

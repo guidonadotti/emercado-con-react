@@ -1,27 +1,46 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import CardPersonalizada from "../General/Cards";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { CategoriesContext } from "../../contexts/CategoriesContext";
+import SpinnerCentrado from "../SpinnerCentrado";
 
 const Categoria = ({ imgSrc, ...props }) => {
   return <CardPersonalizada imgSrc={require(`../../${imgSrc}`)} {...props} />;
 };
+const opciones = {
+  az: function (a, b) {
+    return a.name.localeCompare(b.name);
+  },
+  za: function (a, b) {
+    return b.name.localeCompare(a.name);
+  },
+  dsc: function (a, b) {
+    let [aCount, bCount] = [a, b].map((elemento) =>
+      parseInt(elemento.productCount)
+    );
+    return bCount - aCount;
+  },
+};
 
 let Categorias = () => {
-  const { categorias, filters } = useContext(CategoriesContext);
+  const { categorias, filters, order, isLoading } =
+    useContext(CategoriesContext);
 
   return (
-    <Row as="section" className="gy-3">
+    <section className="grid-cards-container">
+      {isLoading && <SpinnerCentrado />}
+
       {categorias
         .filter((cat) => {
           const { min, max } = filters;
           const cantidad = parseInt(cat.productCount);
           return cantidad >= min && cantidad <= max;
         })
+        .sort(opciones[order])
         .map(({ id, name, imgSrc, description, productCount }) => {
           return (
-            <Col as="article" md={6} lg={4} key={`${name}_${id}`}>
+            <article className="categorie" key={`${name}_${id}`}>
               <Categoria
                 to={`${id}`}
                 name={name}
@@ -29,10 +48,10 @@ let Categorias = () => {
                 description={description}
                 productCount={productCount}
               />
-            </Col>
+            </article>
           );
         })}
-    </Row>
+    </section>
   );
 };
 

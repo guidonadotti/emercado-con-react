@@ -10,28 +10,21 @@ import {
 import { ProductsContext } from "../../contexts/ProductsContexts";
 
 function BotonesOrdenar() {
-  const { productosLista, setProductosLista } = useContext(ProductsContext);
-  const [dsc, asc, rel] = [useId(), useId(), useId()];
-
-  const ordenar = (val) => {
-    const opciones = {
-      dsc: function (a, b) {
-        return -(a.cost - b.cost);
-      },
-      asc: function (a, b) {
-        return a.cost - b.cost;
-      },
-      rel: function (a, b) {
-        return -(a.soldCount - b.soldCount);
-      },
-    };
-    setProductosLista([...productosLista].sort(opciones[val]));
-  };
+  const { setOrder } = useContext(ProductsContext);
+  const [dsc, asc, rel] = [
+    `dsc_${useId()}`,
+    `asc_${useId()}`,
+    `rel_${useId()}`,
+  ];
 
   return (
     <Row as="section">
       <Col className="text-end">
-        <ToggleButtonGroup onChange={ordenar} type="radio" name="options">
+        <ToggleButtonGroup
+          onChange={(val) => setOrder(val)}
+          type="radio"
+          name="options"
+        >
           <ToggleButton
             title="Ordenar descendentemente por precio"
             value="dsc"

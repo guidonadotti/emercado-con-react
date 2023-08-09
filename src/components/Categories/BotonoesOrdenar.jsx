@@ -11,31 +11,19 @@ import {
 import { CategoriesContext } from "../../contexts/CategoriesContext";
 
 const BotonoesOrdenar = () => {
-  const { categorias, setCategorias } = useContext(CategoriesContext);
-  const [az, za, dsc] = [useId(), useId(), useId()];
-
-  const ordenar = (val) => {
-    const opciones = {
-      az: function (a, b) {
-        return a.name.localeCompare(b.name);
-      },
-      za: function (a, b) {
-        return b.name.localeCompare(a.name);
-      },
-      dsc: function (a, b) {
-        let [aCount, bCount] = [a, b].map((elemento) =>
-          parseInt(elemento.productCount)
-        );
-        return bCount - aCount;
-      },
-    };
-    setCategorias([...categorias].sort(opciones[val]));
-  };
+  const { setOrder } = useContext(CategoriesContext);
+  const [az, za, dsc] = [`az_${useId()}`, `za_${useId()}`, `dsc_${useId()}`];
 
   return (
     <Row as="section">
       <Col className="text-end">
-        <ToggleButtonGroup type="radio" name="options" onChange={ordenar}>
+        <ToggleButtonGroup
+          type="radio"
+          name="options"
+          onChange={(val) => {
+            setOrder(val);
+          }}
+        >
           <ToggleButton
             className="btn-light"
             id={az}

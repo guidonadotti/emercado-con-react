@@ -5,21 +5,20 @@ import { CATEGORIES_URL } from "../utils/urls";
 export const CategoriesContext = createContext();
 
 export function CategoriesProvider({ children }) {
-  const [categorias, setCategorias] = useState([]);
   const [filters, setFilters] = useState({
     min: 0,
     max: Infinity,
   });
+  const [order, setOrder] = useState("");
 
-  const { data } = useAPI({ apiURL: CATEGORIES_URL, initialState: [] });
-
-  useEffect(() => {
-    setCategorias(data);
-  }, [data]);
+  const [categorias = [], isLoading] = useAPI({
+    apiURL: CATEGORIES_URL,
+    initialState: [],
+  });
 
   return (
     <CategoriesContext.Provider
-      value={{ categorias, setCategorias, filters, setFilters }}
+      value={{ categorias, isLoading, filters, setFilters, order, setOrder }}
     >
       {children}
     </CategoriesContext.Provider>

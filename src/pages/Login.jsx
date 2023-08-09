@@ -1,8 +1,10 @@
 import React from "react";
 import JAPlogo from "../img/login.png";
 import LoginForm from "../components/LoginForm";
+import useWindowTitle from "../hooks/useWindowTitle";
 
 const Login = () => {
+  useWindowTitle({ windowTitle: "Login" });
   return (
     <>
       <main className="mt-2">

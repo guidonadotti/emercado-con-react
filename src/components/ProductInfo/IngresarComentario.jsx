@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Button, ButtonGroup, Col, Form, Row } from "react-bootstrap";
 import Estrellas from "./Estrellas";
 import { EstrellasContext } from "../../contexts/EstrellasContext";
@@ -25,11 +25,12 @@ function IngresarComentario() {
   const { chequeado, setChequeado } = useContext(EstrellasContext);
   const {
     producto: { name = "producto" },
-    setComentarios,
-    comentarios,
+    setComentariosUsuario,
   } = useContext(ProductContext);
   const { user, getActiveUsername } = useContext(LoginContext);
-  useEffect(() => console.log(comentarios), [comentarios]);
+
+  const formRef = useRef();
+
   const handleInputChange = (event) => {
     setText(event.target.value);
     event.target.style.height = "auto";
@@ -51,8 +52,7 @@ function IngresarComentario() {
       dateTime: formatDateToYYYYMMDDHHMMSS(new Date()),
     };
 
-    setComentarios((prevState) => [...prevState, datosComentario]);
-    console.log(datosComentario);
+    setComentariosUsuario((prevState) => [...prevState, datosComentario]);
 
     setText("");
     setChequeado("");
@@ -60,7 +60,7 @@ function IngresarComentario() {
   const el_la = mayusculas(gender.definiteArticle(name.split(" ")[0]));
 
   return (
-    <Form noValidate onSubmit={handleSubmit}>
+    <Form ref={formRef} noValidate onSubmit={handleSubmit}>
       <Row>
         <Col md="8">
           <Form.Group className="mb-3">

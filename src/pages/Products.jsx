@@ -12,32 +12,31 @@ import Productos from "../components/Products/Productos";
 
 import { ProductsContext } from "../contexts/ProductsContexts";
 import { lg } from "../utils/bootstrapBreakpoints";
+import SpinnerCentrado from "../components/SpinnerCentrado";
+import useWindowTitle from "../hooks/useWindowTitle";
 
 function Products() {
-  const { productos } = useContext(ProductsContext);
+  const { productos, isLoading } = useContext(ProductsContext);
   const isLarge = useMediaQuery({ minWidth: lg });
-
+  useWindowTitle({ windowTitle: productos?.catName || "Productos" });
   return (
     <>
-      <Cabecera categoria={productos.catName} />
+      <Cabecera categoria={productos?.catName} />
       <Container fluid={isLarge}>
         <BotonesOrdenar />
-        {!isLarge ? (
+        {!isLarge && (
           <FiltrosDropdown>
             <Filtros />
           </FiltrosDropdown>
-        ) : (
-          ""
         )}
         <Row>
-          {isLarge ? (
+          {isLarge && (
             <Col as="aside" xs="2">
               <Filtros />
             </Col>
-          ) : (
-            ""
           )}
           <Col as="main">
+            {isLoading && <SpinnerCentrado />}
             <Productos />
           </Col>
         </Row>

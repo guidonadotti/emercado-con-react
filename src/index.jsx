@@ -4,6 +4,7 @@ import "@fontsource/raleway";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { LoginProvider } from "./contexts/LoginContext";
+import { Suspense } from "react";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

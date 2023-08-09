@@ -2,8 +2,7 @@ import React, { useContext } from "react";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 import { ProductsContext } from "../../contexts/ProductsContexts";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import "../../css/Categories.css";
 
 function Producto({
   name,
@@ -40,13 +39,26 @@ function Producto({
   );
 }
 
+const opciones = {
+  dsc: function (a, b) {
+    return -(a.cost - b.cost);
+  },
+  asc: function (a, b) {
+    return a.cost - b.cost;
+  },
+  rel: function (a, b) {
+    return -(a.soldCount - b.soldCount);
+  },
+};
+
 function Productos() {
-  const { productosArray, filters } = useContext(ProductsContext);
+  const { productosArray, order, filters } = useContext(ProductsContext);
   return (
-    <Row as="section" className="gy-3">
+    <section className="gy-3 grid-cards-container ">
       {productosArray
+        .sort(opciones[order])
         .filter(({ cost, name, description }) => {
-          const campoABuscar = (name + description).toLowerCase();
+          const campoABuscar = (name + " " + description).toLowerCase();
           const { busqueda, min, max } = filters;
           return (
             cost >= min &&
@@ -56,12 +68,12 @@ function Productos() {
         })
         .map(({ id, name, ...props }) => {
           return (
-            <Col as="article" md={6} lg={4} key={`${name}_${id}`}>
+            <article key={`${name}_${id}`}>
               <Producto to={`/producto/${id}`} name={name} {...props} />
-            </Col>
+            </article>
           );
         })}
-    </Row>
+    </section>
   );
 }
 

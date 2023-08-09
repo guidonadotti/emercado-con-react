@@ -11,6 +11,8 @@ import { EstrellasProvider } from "../contexts/EstrellasContext";
 import Comentario from "../components/Products/Comentario";
 import CardPersonalizada from "../components/General/Cards";
 import { ProductContext } from "../contexts/ProductContext";
+import Spinner from "../components/Spinner";
+import useWindowTitle from "../hooks/useWindowTitle";
 
 function Comentarios({ datos }) {
   if (datos.length == 0)
@@ -33,7 +35,8 @@ function Comentarios({ datos }) {
 }
 
 function ProductInfo() {
-  const { producto, comentarios } = useContext(ProductContext);
+  const { producto, isLoadingProducto, comentarios, comentariosUsuario } =
+    useContext(ProductContext);
   const {
     name,
     currency,
@@ -42,7 +45,9 @@ function ProductInfo() {
     description,
     relatedProducts = [],
   } = producto;
+  useWindowTitle({ windowTitle: name || "emercado" });
 
+  if (isLoadingProducto) return <Spinner />;
   return (
     <Container as="main" className="p-3">
       <h1>
@@ -74,7 +79,7 @@ function ProductInfo() {
         </EstrellasProvider>
       </Row>
 
-      <Comentarios datos={comentarios} />
+      <Comentarios datos={comentarios.concat(comentariosUsuario)} />
 
       <h2 className="mt-2">Productos relacionados</h2>
 

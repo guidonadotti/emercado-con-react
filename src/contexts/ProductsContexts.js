@@ -8,18 +8,17 @@ export const ProductsContext = createContext();
 
 export function ProductsProvider({ children }) {
   const { id } = useParams();
+  const [productsURL] = useCompleteURL({
+    params: [PRODUCTS_URL, id, EXT_TYPE],
+  });
 
   const [filters, setFilters] = useState({
     busqueda: "",
     min: 0,
     max: Infinity,
   });
-
-  const { completeURL: productsURL = "" } = useCompleteURL({
-    params: [PRODUCTS_URL, id, EXT_TYPE],
-  });
-
-  const { productos, productosArray, setProductosArray } = useProducts({
+  const [order, setOrder] = useState("");
+  const { productos, isLoading, productosArray } = useProducts({
     apiURL: productsURL,
   });
 
@@ -27,10 +26,12 @@ export function ProductsProvider({ children }) {
     <ProductsContext.Provider
       value={{
         productos,
+        isLoading,
+        productosArray,
         filters,
         setFilters,
-        productosArray,
-        setProductosArray,
+        order,
+        setOrder,
       }}
     >
       {children}

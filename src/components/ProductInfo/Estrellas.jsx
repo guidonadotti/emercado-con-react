@@ -12,7 +12,7 @@ function Estrellas({ name }) {
       {[...Array(5)].map((_, index) => {
         const value = index + 1;
         return (
-          <label key={index} className="cursor-active">
+          <label key={`label_estrella_${index}`} className="cursor-active">
             <input
               required
               className="btn-check"

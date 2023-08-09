@@ -7,6 +7,7 @@ import {
   PRODUCT_INFO_COMMENTS_URL,
   PRODUCT_INFO_URL,
 } from "../utils/urls";
+import { useState } from "react";
 
 export const ProductContext = createContext();
 
@@ -15,26 +16,36 @@ const useAPIwithCompleteURL = ({ urlParams, initialState }) => {
     params: urlParams,
   });
 
-  const [data = initialState, setData] = useAPI({
+  const [data = initialState, isLoading] = useAPI({
     apiURL: completeURL,
     initialState: initialState,
   });
-  return [data, setData];
+  return [data, isLoading];
 };
 
 export function ProductProvider({ children }) {
   const { id } = useParams();
 
-  const [producto] = useAPIwithCompleteURL({
+  const [producto, isLoadingProducto] = useAPIwithCompleteURL({
     urlParams: [PRODUCT_INFO_URL, id, EXT_TYPE],
     initialState: {},
   });
-  const [comentarios, setComentarios] = useAPIwithCompleteURL({
+  const [comentarios, isLoadingComentarios] = useAPIwithCompleteURL({
     urlParams: [PRODUCT_INFO_COMMENTS_URL, id, EXT_TYPE],
     initialState: [],
   });
+  const [comentariosUsuario, setComentariosUsuario] = useState([]);
   return (
-    <ProductContext.Provider value={{ comentarios, producto, setComentarios }}>
+    <ProductContext.Provider
+      value={{
+        producto,
+        isLoadingProducto,
+        comentarios,
+        isLoadingComentarios,
+        comentariosUsuario,
+        setComentariosUsuario,
+      }}
+    >
       {children}
     </ProductContext.Provider>
   );

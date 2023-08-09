@@ -12,8 +12,10 @@ import { lg } from "../utils/bootstrapBreakpoints";
 
 import "../css/Categories.css";
 import FiltrosDropdown from "../components/General/FiltrosDropdown";
+import useWindowTitle from "../hooks/useWindowTitle";
 
 const Categories = () => {
+  useWindowTitle({ windowTitle: "Categorías" });
   const isLarge = useMediaQuery({ minWidth: lg });
 
   return (
@@ -21,20 +23,16 @@ const Categories = () => {
       <CategoriesMainCabecera />
       <Container fluid={isLarge}>
         <BotonoesOrdenar />
-        {!isLarge ? (
+        {!isLarge && (
           <FiltrosDropdown>
             <Filtrar />
           </FiltrosDropdown>
-        ) : (
-          ""
         )}
         <Row>
-          {isLarge ? (
+          {isLarge && (
             <Col as="aside" xs="2">
               <Filtrar />
             </Col>
-          ) : (
-            ""
           )}
           <Col>
             <Categorias />
