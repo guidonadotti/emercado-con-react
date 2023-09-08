@@ -45,7 +45,7 @@ function ProductInfo() {
     description,
     relatedProducts = [],
   } = producto;
-  useWindowTitle({ windowTitle: name || "emercado" });
+  useWindowTitle({ windowTitle: name });
 
   if (isLoadingProducto) return <Spinner />;
   return (

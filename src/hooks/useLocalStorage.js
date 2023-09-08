@@ -20,11 +20,7 @@ export default function useLocalStorage({ key, initialValue }) {
 
   useEffect(() => {
     try {
-      if (typeof value == "function") {
-        window.localStorage.setItem(key, JSON.stringify(value()));
-      } else {
-        window.localStorage.setItem(key, JSON.stringify(value));
-      }
+      window.localStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
       console.error(error);
     }

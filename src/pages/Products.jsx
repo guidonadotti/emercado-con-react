@@ -18,7 +18,7 @@ import useWindowTitle from "../hooks/useWindowTitle";
 function Products() {
   const { productos, isLoading } = useContext(ProductsContext);
   const isLarge = useMediaQuery({ minWidth: lg });
-  useWindowTitle({ windowTitle: productos?.catName || "Productos" });
+  useWindowTitle({ windowTitle: productos?.catName });
   return (
     <>
       <Cabecera categoria={productos?.catName} />

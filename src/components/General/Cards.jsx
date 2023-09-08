@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
-import { Link } from "react-router-dom";
 import "../../css/CardsPersonalizadas.css";
+import { Link } from "react-router-dom";
 
 function CardPersonalizada({
   name,
@@ -14,16 +14,19 @@ function CardPersonalizada({
   return (
     <Link to={to}>
       <Card>
-        <Card.Img variant="top" src={imgSrc} alt={imgAlt}></Card.Img>
+        <Card.Img
+          loading="lazy"
+          variant="top"
+          src={imgSrc}
+          alt={imgAlt}
+        ></Card.Img>
         <Card.Body>
           <Card.Title className="d-flex justify-content-between">
             <span>{name}</span>
-            {productCount !== "" ? (
+            {productCount !== "" && (
               <small className="text-muted">
                 {productCount} artículo{productCount !== 1 ? "s" : ""}
               </small>
-            ) : (
-              ""
             )}
           </Card.Title>
           <Card.Text>

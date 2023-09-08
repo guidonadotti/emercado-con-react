@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import BarraItem from "./BarraItem";
 import BarraItemPerfil from "./BarraItemPerfil";
 import Container from "react-bootstrap/Container";

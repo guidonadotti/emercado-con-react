@@ -1,5 +1,4 @@
 .footer {
-  flex-shrink: 0; /* Evita que el footer se reduzca en tamaño si el contenido es pequeño */
   padding-top: 3rem;
   padding-bottom: 3rem;
 }

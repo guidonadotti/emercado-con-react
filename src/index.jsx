@@ -2,10 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "@fontsource/raleway";
 import App from "./App";
-import { BrowserRouter } from "react-router-dom";
 import { LoginProvider } from "./contexts/LoginContext";
-import { Suspense } from "react";
+import { BrowserRouter } from "react-router-dom";
 
+console.log(BrowserRouter);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>

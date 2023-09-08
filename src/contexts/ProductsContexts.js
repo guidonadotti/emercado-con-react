@@ -21,6 +21,17 @@ export function ProductsProvider({ children }) {
   const { productos, isLoading, productosArray } = useProducts({
     apiURL: productsURL,
   });
+  const opciones = {
+    dsc: function (a, b) {
+      return -(a.cost - b.cost);
+    },
+    asc: function (a, b) {
+      return a.cost - b.cost;
+    },
+    rel: function (a, b) {
+      return -(a.soldCount - b.soldCount);
+    },
+  };
 
   return (
     <ProductsContext.Provider
@@ -32,6 +43,7 @@ export function ProductsProvider({ children }) {
         setFilters,
         order,
         setOrder,
+        opciones,
       }}
     >
       {children}

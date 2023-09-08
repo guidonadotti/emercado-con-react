@@ -35,6 +35,7 @@ export default function useUsers() {
       return {
         ...prevState,
         [email]: {
+          ...prevState[email],
           carrito: prevState[email]["carrito"].filter((prod) => prod.id != id),
         },
       };
@@ -48,12 +49,18 @@ export default function useUsers() {
     if (!email) return;
     return users[email]["username"];
   }
+  function getCart({ email }) {
+    if (!email) return;
+    return users[email]["carrito"];
+  }
   return {
     users,
+    setUsers,
     guardarDatos,
     agregarCarrito,
     quitarCarrito,
     estaEnCarrito,
     getActiveUsername,
+    getCart,
   };
 }

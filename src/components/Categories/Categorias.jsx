@@ -1,7 +1,5 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import CardPersonalizada from "../General/Cards";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import { CategoriesContext } from "../../contexts/CategoriesContext";
 import SpinnerCentrado from "../SpinnerCentrado";
 

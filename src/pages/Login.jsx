@@ -6,18 +6,16 @@ import useWindowTitle from "../hooks/useWindowTitle";
 const Login = () => {
   useWindowTitle({ windowTitle: "Login" });
   return (
-    <>
-      <main className="mt-2">
-        <div className="container text-center">
-          <div className="row justify-content-center">
-            <div className="col-md-4">
-              <img src={JAPlogo} alt="Banner Jóvenes a Programar" srcSet="" />
-            </div>
+    <main className="mt-2">
+      <div className="container text-center">
+        <div className="row justify-content-center">
+          <div className="col-md-4">
+            <img src={JAPlogo} alt="Banner Jóvenes a Programar" srcSet="" />
           </div>
-          <LoginForm />
         </div>
-      </main>
-    </>
+        <LoginForm />
+      </div>
+    </main>
   );
 };
 

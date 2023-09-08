@@ -9,7 +9,7 @@ import CardIndex from "../components/General/Cards";
 import useWindowTitle from "../hooks/useWindowTitle";
 
 const Index = () => {
-  useWindowTitle({ windowTitle: "emercado" });
+  useWindowTitle({ windowTitle: "e-mercado" });
   return (
     <>
       <div className="jumbotron text-center"></div>

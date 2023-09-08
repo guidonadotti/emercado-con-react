@@ -3,3 +3,6 @@
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 16px;
 }
+.grid-cards-container article {
+  max-width: 400px;
+}

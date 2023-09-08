@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
+import React, { lazy, useContext } from "react";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 import { ProductsContext } from "../../contexts/ProductsContexts";
 import "../../css/Categories.css";
+import "../../css/CardsPersonalizadas.css";
 
 function Producto({
   name,
@@ -18,18 +19,21 @@ function Producto({
     <Link to={to}>
       <Card>
         <Card.Img
+          loading="lazy"
           variant="top"
           src={require(`../../${image}`)}
           alt={imgAlt}
         ></Card.Img>
         <Card.Body>
           <Card.Title as="h5">{name}</Card.Title>
-          <Card.Title as="h5">{`${currency} ${cost}`}</Card.Title>
+          <Card.Title as="h5">
+            {currency} {cost}
+          </Card.Title>
           <Card.Text>
             <small className="text-muted">{description}</small>
             <br />
             <small>
-              {soldCount} unidad{soldCount !== 1 ? "es" : ""} vendida
+              {soldCount} unidad{soldCount !== 1 && "es"} vendida
               {soldCount !== 1 ? "s" : ""}
             </small>
           </Card.Text>
@@ -39,20 +43,9 @@ function Producto({
   );
 }
 
-const opciones = {
-  dsc: function (a, b) {
-    return -(a.cost - b.cost);
-  },
-  asc: function (a, b) {
-    return a.cost - b.cost;
-  },
-  rel: function (a, b) {
-    return -(a.soldCount - b.soldCount);
-  },
-};
-
 function Productos() {
-  const { productosArray, order, filters } = useContext(ProductsContext);
+  const { productosArray, order, filters, opciones } =
+    useContext(ProductsContext);
   return (
     <section className="gy-3 grid-cards-container ">
       {productosArray

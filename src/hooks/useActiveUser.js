@@ -1,6 +1,4 @@
-import { useState } from "react";
 import useLocalStorage from "./useLocalStorage";
-import { useEffect } from "react";
 
 export default function useActiveUser() {
   const [user, setUser] = useLocalStorage({
