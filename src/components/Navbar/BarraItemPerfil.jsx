@@ -12,10 +12,10 @@ const BarraItemPerfil = ({ children }) => {
 
   return (
     <NavDropdown title={children} id="basic-nav-dropdown">
-      <Link className="dropdown-item" to="cart">
+      <Link className="dropdown-item" to="/cart">
         Mi Carrito
       </Link>
-      <Link className="dropdown-item" to="my-profile">
+      <Link className="dropdown-item" to="/my-profile">
         Mi perfil
       </Link>
       <Link className="dropdown-item" onClick={cerrarSesion}>

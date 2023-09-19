@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import useLocalStorage from "./useLocalStorage";
 
 export default function useUsers() {
@@ -5,6 +6,7 @@ export default function useUsers() {
     key: "usuarios",
     initialValue: {},
   });
+  useEffect(() => console.log(users), [users]);
 
   function guardarDatos({ email }) {
     setUsers((prevState) => {
@@ -12,7 +14,8 @@ export default function useUsers() {
       return {
         ...prevState,
         [email]: {
-          username: email.split("@")[0],
+          email: email,
+          nombre_de_usuario: email.split("@")[0],
           carrito: [],
         },
       };
@@ -43,11 +46,37 @@ export default function useUsers() {
   }
   function estaEnCarrito({ email, id }) {
     if (!email) return false;
-    return users[email]["carrito"].findIndex((p) => p.id == id) != -1;
+    return users[email]["carrito"].findIndex((p) => p["id"] == id) != -1;
+  }
+  function vaciarCarrito({ email }) {
+    setUsers((prevState) => {
+      return {
+        ...prevState,
+        [email]: {
+          ...prevState[email],
+          carrito: [],
+        },
+      };
+    });
   }
   function getActiveUsername({ email }) {
     if (!email) return;
-    return users[email]["username"];
+    return users[email]["nombre_de_usuario"];
+  }
+  function getUserData({ email, data }) {
+    if (!email) return;
+    return users[email][data];
+  }
+  function setUserData({ email, data }) {
+    setUsers((prevState) => {
+      return {
+        ...prevState,
+        [email]: {
+          ...prevState[email],
+          ...data,
+        },
+      };
+    });
   }
   function getCart({ email }) {
     if (!email) return;
@@ -62,5 +91,8 @@ export default function useUsers() {
     estaEnCarrito,
     getActiveUsername,
     getCart,
+    vaciarCarrito,
+    getUserData,
+    setUserData,
   };
 }

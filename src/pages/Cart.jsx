@@ -1,38 +1,54 @@
-import React, { useContext, useState } from "react";
-import Container from "react-bootstrap/Container";
-import Carrito from "../components/Cart/Carrito";
-import Form from "react-bootstrap/Form";
-import TipoDeEnvio from "../components/Cart/TipoDeEnvio";
-import Direccion from "../components/Cart/Direccion";
-import Coste from "../components/Cart/Coste";
-import FormaDePago from "../components/Cart/FormaDePago";
+import React, { Suspense, useContext, useState } from "react";
+import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+
+import Carrito from "../components/Cart/Carrito";
+import Coste from "../components/Cart/Coste";
+import Direccion from "../components/Cart/Direccion";
+import FormaDePago from "../components/Cart/FormaDePago";
+import TipoDeEnvio from "../components/Cart/TipoDeEnvio";
+
 import { CartContext } from "../contexts/CartContext";
+import { LoginContext } from "../contexts/LoginContext";
+
+import "../css/alert.css";
+import useWindowTitle from "../hooks/useWindowTitle";
 
 function Cart() {
-  const [validated, setValidated] = useState(false);
+  const { formValidated, setFormValidated, formID } = useContext(CartContext);
+  const { user, users, vaciarCarrito } = useContext(LoginContext);
+  const { carrito } = users[user];
+  const [mostrarAlerta, setMostrarAlerta] = useState(false);
+  useWindowTitle({ windowTitle: "Mi carrito" });
   const handleSubmit = (event) => {
     event.preventDefault();
-    const form = event.target;
-    console.log(new FormData(form));
-    if (form.checkValidity() === false) {
-      event.stopPropagation();
-    }
+    event.stopPropagation();
 
-    setValidated(true);
+    const form = event.target;
+
+    if (form.checkValidity() && carrito.length !== 0) {
+      vaciarCarrito({ email: user });
+      setFormValidated(false);
+      setMostrarAlerta(true);
+    } else {
+      setFormValidated(true);
+    }
   };
-  const { formID } = useContext(CartContext);
   return (
     <Container as="main">
       <h1 className="text-center">Carrito de compras</h1>
       <Form
         id={formID}
         noValidate
-        validated={validated}
+        validated={formValidated}
         onSubmit={handleSubmit}
       >
         <h2>Artículos</h2>
-        <Carrito />
+        <Suspense>
+          <Carrito />
+        </Suspense>
         <h2>Tipo de Envío</h2>
         <TipoDeEnvio />
         <h2>Dirección</h2>
@@ -42,10 +58,15 @@ function Cart() {
         <hr />
         <h2>Forma de pago</h2>
         <FormaDePago />
-        <section className="d-grid gap-2">
+        <section className="mt-2 d-grid gap-2">
           <Button type="submit">Comprar</Button>
         </section>
       </Form>
+      {mostrarAlerta && (
+        <Alert variant="success" dismissible>
+          ¡Compra realizada con éxito!
+        </Alert>
+      )}
     </Container>
   );
 }

@@ -1,0 +1,12 @@
+p.is-invalid,
+h1.is-invalid,
+h2.is-invalid,
+h3.is-invalid {
+  color: var(--bs-form-invalid-border-color);
+}
+p.is-valid,
+h1.is-valid,
+h2.is-valid,
+h3.is-valid {
+  color: var(--bs-form-valid-border-color);
+}

@@ -1,0 +1,25 @@
+.modal-container:not(.mostrar) {
+  opacity: 0;
+}
+.modal-container.mostrar {
+  opacity: 1;
+}
+
+.modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1060;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  outline: 0;
+  display: none;
+
+  background-color: #21252970;
+
+  transition: opacity 0.15s linear;
+}
+.modal-personalizado {
+}

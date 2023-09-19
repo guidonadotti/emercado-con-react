@@ -5,13 +5,16 @@ export const CartContext = createContext();
 export function CartProvider({ children }) {
   const [cantidadCosto, setCantidadCosto] = useState({});
   const [cantidadCostoUSD, setCantidadCostoUSD] = useState({});
-  const [tipoDeEnvio, setTipoDeEnvio] = useState(0);
+  const [tipoDeEnvio, setTipoDeEnvio] = useState(undefined);
   const [formaDePago, setFormaDePago] = useState("No ha seleccionado.");
+  const [formValidated, setFormValidated] = useState(false);
+  const [modalValidity, setModalValidity] = useState(false);
+
   const formID = `form_carrito_enviar_${useId()}`;
 
   function multiplicarYSumar(obj) {
     let resultado = 0;
-    for (const key in obj) {
+    for (let key in obj) {
       if (obj.hasOwnProperty(key)) {
         const array = obj[key];
         // Verificamos que el array tenga al menos 2 elementos antes de multiplicarlos y sumarlos
@@ -39,6 +42,10 @@ export function CartProvider({ children }) {
         multiplicarYSumar,
         formaDePago,
         setFormaDePago,
+        formValidated,
+        setFormValidated,
+        modalValidity,
+        setModalValidity,
       }}
     >
       {children}

@@ -1,0 +1,9 @@
+label {
+  user-select: none;
+  &.u-select {
+    user-select: auto;
+  }
+}
+label.required::after {
+  content: " *";
+}

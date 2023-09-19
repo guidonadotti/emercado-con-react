@@ -1,72 +1,81 @@
-import React, { Suspense, lazy } from "react";
-import { Route, Routes } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import React, { Suspense, lazy, useContext } from "react";
+import { Route, Routes } from "react-router-dom";
 
-import Barra from "./components/Navbar/Barra";
 import Footer from "./components/Footer/Footer";
+import Barra from "./components/Navbar/Barra";
 
-/* const Barra = lazy(() => import("./components/Navbar/Barra"));
-const Footer = lazy(() => import("./components/Footer/Footer")); */
+import "./css/App.css";
+import "./css/general.css";
+import "./css/index.css";
+
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import { CartProvider } from "./contexts/CartContext";
+import { CategoriesProvider } from "./contexts/CategoriesContext";
+import { LoginContext } from "./contexts/LoginContext";
+import { ProductProvider } from "./contexts/ProductContext";
+import { ProductsProvider } from "./contexts/ProductsContexts";
+import SpinnerCentrado from "./components/SpinnerCentrado";
+
 const Login = lazy(() => import("./pages/Login"));
 const Categories = lazy(() => import("./pages/Categories"));
 const Index = lazy(() => import("./pages/Index"));
 const Products = lazy(() => import("./pages/Products"));
 const ProductInfo = lazy(() => import("./pages/ProductInfo"));
 const Cart = lazy(() => import("./pages/Cart"));
-
-import "./css/App.css";
-import "./css/index.css";
-import "./css/general.css";
-
-import { CategoriesProvider } from "./contexts/CategoriesContext";
-import { ProductsProvider } from "./contexts/ProductsContexts";
-import { ProductProvider } from "./contexts/ProductContext";
-import { CartProvider } from "./contexts/CartContext";
+const MyProfile = lazy(() => import("./pages/MyProfile.jsx"));
 
 function App() {
+  const { user } = useContext(LoginContext);
+
   return (
     <>
       <Barra />
-      <Suspense>
-        <Routes>
-          <Route index element={<Index />} />
-          <Route path="/login" element={<Login />} />
-          <Route
-            path="/categories"
-            element={
-              <CategoriesProvider>
-                <Categories />
-              </CategoriesProvider>
-            }
-          />
-          <Route
-            path="/categories/:id"
-            element={
-              <ProductsProvider>
-                <Products />
-              </ProductsProvider>
-            }
-          />
-          <Route
-            path="/producto/:id"
-            element={
-              <ProductProvider>
-                <ProductInfo />
-              </ProductProvider>
-            }
-          />
-          <Route
-            path="/cart"
-            element={
-              <CartProvider>
-                <Cart />
-              </CartProvider>
-            }
-          />
+      <div>
+        <Suspense fallback={<SpinnerCentrado />}>
+          <Routes>
+            <Route index element={<Index />} />
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/categories"
+              element={
+                <CategoriesProvider>
+                  <Categories />
+                </CategoriesProvider>
+              }
+            />
+            <Route
+              path="/categories/:id"
+              element={
+                <ProductsProvider>
+                  <Products />
+                </ProductsProvider>
+              }
+            />
+            <Route
+              path="/producto/:id"
+              element={
+                <ProductProvider>
+                  <ProductInfo />
+                </ProductProvider>
+              }
+            />
+            <Route element={<ProtectedRoute isAllowed={!!user} />}>
+              <Route
+                path="/cart"
+                element={
+                  <CartProvider>
+                    <Cart />
+                  </CartProvider>
+                }
+              />
+              <Route path="/my-profile" element={<MyProfile />} />
+            </Route>
 
-          <Route path="*" element={<h1>404</h1>} />
-        </Routes>
-      </Suspense>
+            <Route path="*" element={<h1>404</h1>} />
+          </Routes>
+        </Suspense>
+      </div>
       <Footer />
     </>
   );

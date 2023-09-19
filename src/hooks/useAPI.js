@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 function useAPI({ apiURL = "", initialState }) {
   const [data, setData] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
 
   useEffect(() => {
     setIsLoading(true);
@@ -23,13 +24,13 @@ function useAPI({ apiURL = "", initialState }) {
         .then((APIdata) => {
           setData(APIdata);
         })
-        .catch((e) => console.error(e))
+        .catch((e) => setError(e))
         .finally(() => {
           setIsLoading(false);
         });
   }, [apiURL]);
 
-  return [data, isLoading];
+  return [data, isLoading, error];
 }
 
 export default useAPI;

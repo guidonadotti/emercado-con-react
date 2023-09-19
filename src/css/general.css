@@ -1,3 +1,5 @@
+@import "./labels.css";
+
 main {
   min-height: calc(100vh - 210px);
 }
@@ -7,7 +9,6 @@ main {
 .site-header {
   font-family: "Raleway", serif !important;
 }
-label,
 nav a {
   user-select: none;
 }

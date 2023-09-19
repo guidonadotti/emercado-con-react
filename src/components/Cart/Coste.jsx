@@ -8,7 +8,7 @@ function Coste() {
   const costo =
     multiplicarYSumar(cantidadCosto) / USDUYU +
     multiplicarYSumar(cantidadCostoUSD);
-  const costoEnvio = (costo * tipoDeEnvio) / 100;
+  const costoEnvio = (costo * tipoDeEnvio) / 100 || 0;
 
   function darFormato(numero) {
     return new Intl.NumberFormat("es-UY", {

@@ -1,4 +1,3 @@
-import React from "react";
 import { useContext } from "react";
 import Button from "react-bootstrap/Button";
 import {
@@ -6,7 +5,6 @@ import {
   BsFillCartPlusFill as CartAdd,
 } from "react-icons/bs";
 import { LoginContext } from "../../contexts/LoginContext";
-import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ProductContext } from "../../contexts/ProductContext";
 
