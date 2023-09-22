@@ -2,8 +2,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React, { Suspense, lazy, useContext } from "react";
 import { Route, Routes } from "react-router-dom";
 
-import Footer from "./components/Footer/Footer";
 import Barra from "./components/Navbar/Barra";
+import Footer from "./components/Footer/Footer";
 
 import "./css/App.css";
 import "./css/general.css";
@@ -15,6 +15,8 @@ import { CategoriesProvider } from "./contexts/CategoriesContext";
 import { LoginContext } from "./contexts/LoginContext";
 import { ProductProvider } from "./contexts/ProductContext";
 import { ProductsProvider } from "./contexts/ProductsContexts";
+import { SellProvider } from "./contexts/SellContext";
+import { ProfileProvider } from "./contexts/ProfileContext";
 import SpinnerCentrado from "./components/SpinnerCentrado";
 
 const Login = lazy(() => import("./pages/Login"));
@@ -24,6 +26,7 @@ const Products = lazy(() => import("./pages/Products"));
 const ProductInfo = lazy(() => import("./pages/ProductInfo"));
 const Cart = lazy(() => import("./pages/Cart"));
 const MyProfile = lazy(() => import("./pages/MyProfile.jsx"));
+const Sell = lazy(() => import("./pages/Sell"));
 
 function App() {
   const { user } = useContext(LoginContext);
@@ -60,7 +63,7 @@ function App() {
                 </ProductProvider>
               }
             />
-            <Route element={<ProtectedRoute isAllowed={!!user} />}>
+            <Route element={<ProtectedRoute isAllowed={Boolean(user)} />}>
               <Route
                 path="/cart"
                 element={
@@ -69,8 +72,23 @@ function App() {
                   </CartProvider>
                 }
               />
-              <Route path="/my-profile" element={<MyProfile />} />
+              <Route
+                path="/my-profile"
+                element={
+                  <ProfileProvider>
+                    <MyProfile />
+                  </ProfileProvider>
+                }
+              />
             </Route>
+            <Route
+              path="/sell"
+              element={
+                <SellProvider>
+                  <Sell />
+                </SellProvider>
+              }
+            />
 
             <Route path="*" element={<h1>404</h1>} />
           </Routes>

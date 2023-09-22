@@ -15,7 +15,7 @@ export function CartProvider({ children }) {
   function multiplicarYSumar(obj) {
     let resultado = 0;
     for (let key in obj) {
-      if (obj.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
         const array = obj[key];
         // Verificamos que el array tenga al menos 2 elementos antes de multiplicarlos y sumarlos
         if (array.length >= 2) {
